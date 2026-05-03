@@ -67,6 +67,11 @@ function parseVoice(bytes) {
   return { mime, body };
 }
 
+function openVoiceView(voice) {
+  const source = `data:${voice.mime};base64,${bytesToBase64(voice.body)}`;
+  window.open(source, '_blank', 'noopener,noreferrer');
+}
+
 function chooseMimeType() {
   const candidates = [
     'audio/webm;codecs=opus',
@@ -191,6 +196,19 @@ export function createCakkPlugin(hostApi) {
             controls: true,
             preload: 'metadata',
           });
+        },
+      });
+
+      registry.registerMessageView({
+        id: 'voice',
+        priority: 100,
+        canHandle,
+        openView({ bytes }) {
+          const voice = parseVoice(bytes);
+          if (!voice) {
+            return;
+          }
+          openVoiceView(voice);
         },
       });
     },
