@@ -1,7 +1,6 @@
 const MAGIC = 'CAKK:VOICE:1\n';
 const MAGIC_BYTES = new TextEncoder().encode(MAGIC);
 const CANCEL_DELTA_X = -72;
-const MICROPHONE_ICON_URL = 'data:image/png;base64,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';
 
 function createElement(hostApi, type, props, children) {
   if (typeof hostApi?.createElement !== 'function') {
@@ -73,17 +72,6 @@ function openVoiceView(voice) {
   window.open(source, '_blank', 'noopener,noreferrer');
 }
 
-function renderOneTouchButtonIcon(hostApi) {
-  return createElement(hostApi, 'img', {
-    src: MICROPHONE_ICON_URL,
-    alt: '',
-    'aria-hidden': true,
-    width: 20,
-    height: 20,
-    draggable: false,
-  });
-}
-
 function chooseMimeType() {
   const candidates = [
     'audio/webm;codecs=opus',
@@ -110,9 +98,7 @@ export function createCakkPlugin(hostApi) {
         id: 'voice',
         title: 'Voice',
         buttonAriaLabel: 'Голосовое сообщение',
-        renderButtonIcon() {
-          return renderOneTouchButtonIcon(hostApi);
-        },
+        buttonIcon: './dist/icons/voice-button.png',
         priority: 100,
         async begin() {
           if (!navigator.mediaDevices?.getUserMedia || typeof window.MediaRecorder !== 'function') {
