@@ -166,6 +166,9 @@ export function createCakkPlugin(hostApi) {
             metaEntries: [{ content_type: result.mime }],
           };
         },
+        async getPushPreview() {
+          return 'Голосовое сообщение';
+        },
       });
 
       const canHandle = ({ bytes }) => Boolean(parseVoice(bytes));
